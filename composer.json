@@ -11,10 +11,10 @@
   },
   "autoload": {
     "psr-4": {
-      "swoop\\ContaoImageMaskBundle\\": "src/"
+      "swoopde\\ContaoImageMaskBundle\\": "src/"
     }
   },
   "extra": {
-    "contao-manager-plugin": "swoop\\ContaoImageMaskBundle\\ContaoManager\\Plugin"
+    "contao-manager-plugin": "swoopde\\ContaoImageMaskBundle\\ContaoManager\\Plugin"
   }
 }

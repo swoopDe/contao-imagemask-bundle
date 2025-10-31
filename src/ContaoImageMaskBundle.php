@@ -1,5 +1,5 @@
 <?php
-namespace swoop\ContaoImageMaskBundle;
+namespace swoopde\ContaoImageMaskBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
