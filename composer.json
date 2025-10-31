@@ -1,5 +1,6 @@
 {
   "name": "swoop/contao-imagemask-bundle",
+  "version": "1.0.0",
   "description": "Image+SVG Mask content element via RSCE for Contao 4.13 & 5.x",
   "type": "contao-bundle",
   "license": "MIT",
