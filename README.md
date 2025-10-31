@@ -53,7 +53,7 @@ $logger->debug('Debug info', ['data' => $myVar]);
 
 ### ⚙️ Installation
 ```bash
-composer require swoop/contao-imagemask-bundle
+composer require swoopDe/contao-imagemask-bundle
 ```
 
 
@@ -89,7 +89,7 @@ Supports Contao 4.13 (PHP templates) and Contao 5.x (Twig templates).
 
 ### ⚙️ Installation
 ```bash
-composer require swoop/contao-imagemask-bundle
+composer require swoopDe/contao-imagemask-bundle
 ```
 
 
