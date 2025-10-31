@@ -1,0 +1,19 @@
+{
+  "name": "swoop/contao-imagemask-bundle",
+  "description": "Image+SVG Mask content element via RSCE for Contao 4.13 & 5.x",
+  "type": "contao-bundle",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.4",
+    "contao/core-bundle": "^4.13 || ^5.0",
+    "madeyourday/contao-rocksolid-custom-elements": "^2.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "swoop\\ContaoImageMaskBundle\\": "src/"
+    }
+  },
+  "extra": {
+    "contao-manager-plugin": "swoop\\ContaoImageMaskBundle\\ContaoManager\\Plugin"
+  }
+}

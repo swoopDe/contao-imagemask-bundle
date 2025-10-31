@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2">
+    <file source-language="en"
+          datatype="php"
+          original="contao/languages/en/tl_imagemask.php">
+        <body>
+            <trans-unit id="label.0"><source>Image Mask</source></trans-unit>
+            <trans-unit id="label.1"><source>Image with SVG mask</source></trans-unit>
+
+            <trans-unit id="image.0"><source>Image</source></trans-unit>
+            <trans-unit id="image.1"><source>The visible image to be masked.</source></trans-unit>
+
+            <trans-unit id="maskSvg.0"><source>Mask SVG</source></trans-unit>
+            <trans-unit id="maskSvg.1"><source>SVG file used as a CSS mask.</source></trans-unit>
+
+            <trans-unit id="bgSize.0"><source>Image scale</source></trans-unit>
+            <trans-unit id="bgSize.1"><source>Value for <code>background-size</code>.</source></trans-unit>
+
+            <trans-unit id="bgPosition.0"><source>Image position</source></trans-unit>
+            <trans-unit id="bgPosition.1"><source>Value for <code>background-position</code>.</source></trans-unit>
+
+            <trans-unit id="maskSync.0"><source>Sync mask with image</source></trans-unit>
+            <trans-unit id="maskSync.1"><source>Scale/position the mask like the image.</source></trans-unit>
+
+            <trans-unit id="maskSize.0"><source>Mask size</source></trans-unit>
+            <trans-unit id="maskSize.1"><source>Only relevant if not synced.</source></trans-unit>
+
+            <trans-unit id="ratio.0"><source>Aspect ratio</source></trans-unit>
+            <trans-unit id="ratio.1"><source>e.g. 16/9 or 1/1 (CSS <code>aspect-ratio</code>).</source></trans-unit>
+
+            <trans-unit id="minHeight.0"><source>Min. height</source></trans-unit>
+            <trans-unit id="minHeight.1"><source>e.g. 240px (if no aspect ratio).</source></trans-unit>
+
+            <trans-unit id="customClasses.0"><source>Additional classes</source></trans-unit>
+            <trans-unit id="customClasses.1"><source>Optional CSS classes for wrapper.</source></trans-unit>
+        </body>
+    </file>
+</xliff>

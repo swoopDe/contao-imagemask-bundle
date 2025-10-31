@@ -1,0 +1,66 @@
+{# UUID -> Figure -> Pfade (mit asset() = führender Slash & subdir-sicher) #}
+{% set imgFigure  = image   ? figure(image, null) : null %}
+{% set maskFigure = maskSvg ? figure(maskSvg, null) : null %}
+{% set imgSrc  = imgFigure  ? asset(imgFigure.image.filePath)  : '' %}
+{% set maskSrc = maskFigure ? asset(maskFigure.image.filePath) : '' %}
+
+{# Alt-Text #}
+{% set altText = imgFigure and imgFigure.image.meta.alt ? imgFigure.image.meta.alt : (imgFigure ? imgFigure.image.name : '') %}
+
+{# Eingaben + Defaults #}
+{% set bpos  = bgPosition|default('center') %}
+{% set mSync = maskSync is same as(true) or maskSync == 1 %}
+
+{# background-size aus Auswahl mappen (2-Wert-Syntax unterstützen) #}
+{% set bsize = {
+    'cover': 'cover',
+    'contain': 'contain',
+    'auto': 'auto',
+    '100_auto': '100% auto',
+    'auto_100': 'auto 100%'
+}[bgSize|default('cover')] ?? 'cover' %}
+
+{# Wenn Maske koppeln: mask-size = background-size. Sonst eigene maskSize übernehmen #}
+{% set msize = mSync
+    ? bsize
+    : (maskSize|default('cover'))
+%}
+
+{# Styles zusammenbauen #}
+{% set rules = [] %}
+{% if imgSrc %}{% set rules = rules|merge(["background-image:url('" ~ imgSrc|e('url') ~ "')"]) %}{% endif %}
+{% set rules = rules|merge([
+    "background-position:" ~ bpos,
+    "background-repeat:no-repeat",
+    "background-size:" ~ bsize
+]) %}
+
+{% if maskSrc %}
+    {% set rules = rules|merge([
+        "-webkit-mask-image:url('" ~ maskSrc|e('url') ~ "')",
+        "mask-image:url('" ~ maskSrc|e('url') ~ "')",
+        "-webkit-mask-repeat:no-repeat", "mask-repeat:no-repeat",
+        "-webkit-mask-position:" ~ bpos, "mask-position:" ~ bpos,
+        "-webkit-mask-size:" ~ msize,   "mask-size:" ~ msize
+    ]) %}
+{% endif %}
+
+{% if ratio %}{% set rules = rules|merge(["aspect-ratio:" ~ ratio]) %}{% endif %}
+{% if minHeight %}{% set rules = rules|merge(["min-height:" ~ minHeight]) %}{% endif %}
+
+{# cssID aus Standardfeldern #}
+{% set idAttr    = cssID is defined and cssID[0] ? ' id="' ~ cssID[0] ~ '"' : '' %}
+{% set classList = ['ce_imagemask', customClasses|default('')] %}
+{% if cssID is defined and cssID[1] %}{% set classList = classList|merge([cssID[1]]) %}{% endif %}
+
+<div{{ idAttr|raw }} class="{{ classList|join(' ')|trim }}">
+    {% if headline and headline.text %}
+        <{{ headline.tag|default('h2') }} class="ce_headline">{{ headline.text }}</{{ headline.tag|default('h2') }}>
+    {% endif %}
+
+    <div class="ce-imagemask__inner"
+         style="{{ rules|join(';') }}"
+         role="img"
+         aria-label="{{ altText|striptags }}">
+    </div>
+</div>

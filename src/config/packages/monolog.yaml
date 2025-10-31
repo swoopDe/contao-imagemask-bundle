@@ -1,0 +1,8 @@
+monolog:
+  channels: ['imagemask']
+  handlers:
+    imagemask:
+      type: stream
+      path: '%kernel.logs_dir%/imagemask.log'
+      level: debug
+      channels: ['imagemask']
