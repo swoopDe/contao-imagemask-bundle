@@ -3,6 +3,14 @@
   "description": "Image+SVG Mask content element via RSCE for Contao 4.13 & 5.x",
   "type": "contao-bundle",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Andreas Schreck",
+      "email": "as@swoop.pro",
+      "homepage": "https://swoop.de"
+    }
+  ],
+  "homepage": "https://swoop.de",
   "require": {
     "php": ">=7.4",
     "contao/core-bundle": "^4.13 || ^5.0",
