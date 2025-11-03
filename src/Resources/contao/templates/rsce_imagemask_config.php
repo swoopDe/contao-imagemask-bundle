@@ -4,6 +4,27 @@
 \Contao\System::loadLanguageFile('tl_imagemask');
 \Contao\System::loadLanguageFile('tl_content');
 
+
+// Contao-Version ermitteln
+// Kompatibel mit Contao 4 und 5
+if (method_exists(\Contao\System::class, 'getContainer')) {
+    $container = \Contao\System::getContainer();
+} elseif (isset($GLOBALS['container'])) {
+    // Contao 4 stellt den Container global bereit
+    $container = $GLOBALS['container'];
+} else {
+    $container = null;
+}
+
+$coreVersion = '4.13.0';
+if ($container && $container->hasParameter('kernel.packages')) {
+    $packages = $container->getParameter('kernel.packages');
+    $coreVersion = ltrim($packages['contao/core-bundle'] ?? '4.13.0', 'v');
+}
+$useTwig = version_compare($coreVersion, '5.0.0', '>=');
+
+
+
 // kleine Helper-Funktion: gibt das TL_LANG-Array zurück, falls vorhanden,
 // sonst den Translator-Key als Array (für C5 XLIFF)
 $L = $GLOBALS['TL_LANG']['tl_imagemask'] ?? [];
@@ -14,6 +35,10 @@ $lbl = function (string $key): array {
 };
 
 return [
+    // In C5 Twig verwenden, in C4 erzwingen wir HTML5
+    'template'        => $useTwig ? 'rsce_imagemask' : 'rsce_imagemask.html5',
+
+
     // Element-Label
     'label'           => $lbl('label'),
 
