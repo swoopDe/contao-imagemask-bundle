@@ -7,13 +7,19 @@
 
 ---
 
+| Image                               | Mask   | Result  |
+|-------------------------------------|--------|---------|
+| ![Screenshot](./docs/handshake.jpg) | ![Screenshot](./docs/mask1.svg) |![Screenshot](./docs/result.png) |
+
+
+
 ## 🇩🇪 Deutsch
 
 ###  Beschreibung
 Dieses Bundle stellt ein **RockSolid Custom Element (RSCE)** bereit,  
 mit dem du ein **Bild mit einer SVG-Maske** kombinieren kannst.  
 Die Maske kann mit dem Bild synchron skaliert werden (z. B. „100 % Breite – automatische Höhe“).  
-Unterstützt **Contao 4.13** (PHP-Templates) und **Contao 5.x** (Twig-Templates).
+Unterstützt **Contao 4.13** und **Contao 5.x** (Twig-Templates).
 
 ### Funktionen
 * RSCE-Inhaltselement „Image with Mask | Bild mit Maske“
@@ -66,7 +72,7 @@ composer require swoopDe/contao-imagemask-bundle
 
 This bundle provides a RockSolid Custom Element (RSCE) to combine an image with an SVG mask.
 The mask can be synchronized with the image scaling (e.g. “100% width — automatic height”).
-Supports Contao 4.13 (PHP templates) and Contao 5.x (Twig templates).
+Supports Contao 4.13 and Contao 5.x (Twig templates).
 
 ###
 * Features
