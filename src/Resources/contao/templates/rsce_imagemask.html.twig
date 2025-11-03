@@ -1,12 +1,31 @@
-{# UUID -> Figure -> Pfade (mit asset() = führender Slash & subdir-sicher) #}
-{# C5-only: echtes Figure-Objekt #}
-{#{% set imgFigure  = image   ? figure(image, null) : null %}#}
-{#{% set maskFigure = maskSvg ? figure(maskSvg, null) : null %}#}
+{# --- UUID/Pfad robust ermitteln (C4.13 & C5) --------------------------- #}
+{# image kann sein: "uuid"-String (C4), oder Array/Objekt mit uuid/path (C5) #}
+{% set imgUuid = image is defined
+    ? (image is iterable
+    ? (image.uuid is defined ? image.uuid
+    : (image.value is defined ? image.value : null))
+    : image)  # hier ist image dann ein String (UUID)
+    : null
+    %}
 
-{% set imgPath  = image   ? insert_tag('file::' ~ image)   : '' %}
-{% set maskPath = maskSvg ? insert_tag('file::' ~ maskSvg) : '' %}
-{% set imgSrc  = imgFigure  ? asset(imgFigure.image.filePath)  : '' %}
-{% set maskSrc = maskFigure ? asset(maskFigure.image.filePath) : '' %}
+{% set maskUuid = maskSvg is defined
+    ? (maskSvg is iterable
+    ? (maskSvg.uuid is defined ? maskSvg.uuid
+    : (maskSvg.value is defined ? maskSvg.value : null))
+    : maskSvg)
+    : null %}
+
+{# Wenn Pfade bereits vorhanden sind (C5), direkt nutzen, sonst via Insert-Tag #}
+{% set imgPath  = (image is defined and image is iterable and image.path is defined)
+    ? image.path
+    : (imgUuid ? insert_tag('file::' ~ imgUuid) : '') %}
+
+{% set maskPath = (maskSvg is defined and maskSvg is iterable and maskSvg.path is defined)
+    ? maskSvg.path
+    : (maskUuid ? insert_tag('file::' ~ maskUuid) : '') %}
+
+{% set imgSrc  = imgPath  ? asset(imgPath)  : '' %}
+{% set maskSrc = maskPath ? asset(maskPath) : '' %}
 
 {# Alt-Text #}
 {% set altText = imgFigure and imgFigure.image.meta.alt ? imgFigure.image.meta.alt : (imgFigure ? imgFigure.image.name : '') %}
@@ -27,8 +46,7 @@
 {# Wenn Maske koppeln: mask-size = background-size. Sonst eigene maskSize übernehmen #}
 {% set msize = mSync
     ? bsize
-    : (maskSize|default('cover'))
-%}
+    : (maskSize|default('cover')) %}
 
 {# Styles zusammenbauen #}
 {% set rules = [] %}
@@ -56,6 +74,7 @@
 {% set idAttr    = cssID is defined and cssID[0] ? ' id="' ~ cssID[0] ~ '"' : '' %}
 {% set classList = ['ce_imagemask', customClasses|default('')] %}
 {% if cssID is defined and cssID[1] %}{% set classList = classList|merge([cssID[1]]) %}{% endif %}
+
 
 <div{{ idAttr|raw }} class="{{ classList|join(' ')|trim }}">
     {% if headline and headline.text %}
