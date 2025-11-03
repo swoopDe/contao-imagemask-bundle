@@ -5,23 +5,25 @@
 \Contao\System::loadLanguageFile('tl_content');
 
 
-// Contao-Version ermitteln
-// Kompatibel mit Contao 4 und 5
-if (method_exists(\Contao\System::class, 'getContainer')) {
-    $container = \Contao\System::getContainer();
-} elseif (isset($GLOBALS['container'])) {
-    // Contao 4 stellt den Container global bereit
+// ==== Container holen (C4 via $GLOBALS['container'], C5 via System::getContainer(), aber OHNE aufzurufen in C4) ====
+$container = null;
+if (method_exists(System::class, 'getContainer')) {  // C5.x
+    $container = System::getContainer();
+} elseif (isset($GLOBALS['container'])) {                        // C4.13
     $container = $GLOBALS['container'];
-} else {
-    $container = null;
 }
 
-$coreVersion = '4.13.0';
+// ==== Contao-Version feststellen (ohne getContainer zu erzwingen) ====
+$useTwig = false; // default: C4
 if ($container && $container->hasParameter('kernel.packages')) {
-    $packages = $container->getParameter('kernel.packages');
-    $coreVersion = ltrim($packages['contao/core-bundle'] ?? '4.13.0', 'v');
+    $packages   = $container->getParameter('kernel.packages');
+    $coreVer    = isset($packages['contao/core-bundle']) ? ltrim($packages['contao/core-bundle'], 'v') : '4.13.0';
+    $useTwig    = version_compare($coreVer, '5.0.0', '>=');
+} else {
+    // Fallback: Wenn die Methode existiert, sind wir praktisch in C5
+    $useTwig = method_exists(System::class, 'getContainer');
 }
-$useTwig = version_compare($coreVersion, '5.0.0', '>=');
+
 
 
 
