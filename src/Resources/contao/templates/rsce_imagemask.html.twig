@@ -1,6 +1,10 @@
 {# UUID -> Figure -> Pfade (mit asset() = führender Slash & subdir-sicher) #}
-{% set imgFigure  = image   ? figure(image, null) : null %}
-{% set maskFigure = maskSvg ? figure(maskSvg, null) : null %}
+{# C5-only: echtes Figure-Objekt #}
+{#{% set imgFigure  = image   ? figure(image, null) : null %}#}
+{#{% set maskFigure = maskSvg ? figure(maskSvg, null) : null %}#}
+
+{% set imgPath  = image   ? insert_tag('file::' ~ image)   : '' %}
+{% set maskPath = maskSvg ? insert_tag('file::' ~ maskSvg) : '' %}
 {% set imgSrc  = imgFigure  ? asset(imgFigure.image.filePath)  : '' %}
 {% set maskSrc = maskFigure ? asset(maskFigure.image.filePath) : '' %}
 

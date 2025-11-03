@@ -5,28 +5,6 @@
 \Contao\System::loadLanguageFile('tl_content');
 
 
-// ==== Container holen (C4 via $GLOBALS['container'], C5 via System::getContainer(), aber OHNE aufzurufen in C4) ====
-$container = null;
-if (method_exists(System::class, 'getContainer')) {  // C5.x
-    $container = System::getContainer();
-} elseif (isset($GLOBALS['container'])) {                        // C4.13
-    $container = $GLOBALS['container'];
-}
-
-// ==== Contao-Version feststellen (ohne getContainer zu erzwingen) ====
-$useTwig = false; // default: C4
-if ($container && $container->hasParameter('kernel.packages')) {
-    $packages   = $container->getParameter('kernel.packages');
-    $coreVer    = isset($packages['contao/core-bundle']) ? ltrim($packages['contao/core-bundle'], 'v') : '4.13.0';
-    $useTwig    = version_compare($coreVer, '5.0.0', '>=');
-} else {
-    // Fallback: Wenn die Methode existiert, sind wir praktisch in C5
-    $useTwig = method_exists(System::class, 'getContainer');
-}
-
-
-
-
 // kleine Helper-Funktion: gibt das TL_LANG-Array zurück, falls vorhanden,
 // sonst den Translator-Key als Array (für C5 XLIFF)
 $L = $GLOBALS['TL_LANG']['tl_imagemask'] ?? [];
@@ -37,9 +15,6 @@ $lbl = function (string $key): array {
 };
 
 return [
-    // In C5 Twig verwenden, in C4 erzwingen wir HTML5
-    'template'        => $useTwig ? 'rsce_imagemask' : 'rsce_imagemask.html5',
-
 
     // Element-Label
     'label'           => $lbl('label'),
