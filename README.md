@@ -1,5 +1,13 @@
+
+<p align="center">
+    <picture>
+      <img src="docs/logo/swoop.svg" width="300" alt="Contao Cookiebar"/>
+    </picture>
+</p>
+
 # Contao ImageMask Bundle
 🇬🇧 English (below) | 🇩🇪 Deutsch (above)
+
 
 
 ### RSCE-Inhaltselement für Bild-Masken mit SVG

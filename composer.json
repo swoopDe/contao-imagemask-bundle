@@ -7,9 +7,14 @@
     {
       "name": "Andreas Schreck",
       "email": "as@swoop.pro",
-      "homepage": "https://swoop.de"
+      "homepage": "https://swoop.de",
+      "role": "Developer"
     }
   ],
+  "support": {
+    "issues": "https://github.com/swoopde/contao-imagemask-bundle/issues",
+    "source": "https://github.com/swoopde/contao-imagemask-bundle"
+  },
   "homepage": "https://swoop.de",
   "require": {
     "php": ">=7.4",
