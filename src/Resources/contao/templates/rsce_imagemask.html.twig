@@ -28,7 +28,10 @@
 {% set maskSrc = maskPath ? asset(maskPath) : '' %}
 
 {# Alt-Text #}
-{% set altText = imgFigure and imgFigure.image.meta.alt ? imgFigure.image.meta.alt : (imgFigure ? imgFigure.image.name : '') %}
+{% set altText = (imgFigure is defined and imgFigure.image is defined and imgFigure.image.meta.alt)
+    ? imgFigure.image.meta.alt
+    : (imgFigure is defined and imgFigure.image is defined ? imgFigure.image.name : '') %}
+
 
 {# Eingaben + Defaults #}
 {% set bpos  = bgPosition|default('center') %}
@@ -71,9 +74,19 @@
 {% if minHeight %}{% set rules = rules|merge(["min-height:" ~ minHeight]) %}{% endif %}
 
 {# cssID aus Standardfeldern #}
-{% set idAttr    = cssID is defined and cssID[0] ? ' id="' ~ cssID[0] ~ '"' : '' %}
+{# Sicher auf Array trimmen #}
+{% set _css = (cssID is defined and cssID is iterable) ? cssID : [] %}
+{# ID nur setzen, wenn es das erste Element gibt und nicht leer ist #}
+{% set idAttr = (_css[0] is defined and _css[0])
+    ? ' id="' ~ _css[0]|e('html_attr') ~ '"'
+    : '' %}
+
 {% set classList = ['ce_imagemask', customClasses|default('')] %}
-{% if cssID is defined and cssID[1] %}{% set classList = classList|merge([cssID[1]]) %}{% endif %}
+
+{% if cssID is defined and cssID is iterable and cssID[1] is defined and cssID[1] %}
+    {% set classList = classList|merge([cssID[1]]) %}
+{% endif %}
+
 
 
 <div{{ idAttr|raw }} class="{{ classList|join(' ')|trim }}">
