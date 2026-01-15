@@ -35,6 +35,7 @@
 
 {# Eingaben + Defaults #}
 {% set bpos  = bgPosition|default('center') %}
+{% set maskSync = maskSync|default(false) %}
 {% set mSync = maskSync is same as(true) or maskSync == 1 %}
 
 {# background-size aus Auswahl mappen (2-Wert-Syntax unterstützen) #}
@@ -70,7 +71,9 @@
     ]) %}
 {% endif %}
 
+{% set ratio = ratio|default(null) %}
 {% if ratio %}{% set rules = rules|merge(["aspect-ratio:" ~ ratio]) %}{% endif %}
+{% set minHeight = minHeight|default(null) %}
 {% if minHeight %}{% set rules = rules|merge(["min-height:" ~ minHeight]) %}{% endif %}
 
 {# cssID aus Standardfeldern #}
