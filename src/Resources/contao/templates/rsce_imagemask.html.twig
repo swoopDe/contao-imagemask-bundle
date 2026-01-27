@@ -54,7 +54,7 @@
 
 {# Styles zusammenbauen #}
 {% set rules = [] %}
-{% if imgSrc %}{% set rules = rules|merge(["background-image:url('" ~ imgSrc|e('url') ~ "')"]) %}{% endif %}
+{% if imgSrc %}{% set rules = rules|merge(["background-image:url('" ~ imgSrc ~ "')"]) %}{% endif %}
 {% set rules = rules|merge([
     "background-position:" ~ bpos,
     "background-repeat:no-repeat",
@@ -63,8 +63,8 @@
 
 {% if maskSrc %}
     {% set rules = rules|merge([
-        "-webkit-mask-image:url('" ~ maskSrc|e('url') ~ "')",
-        "mask-image:url('" ~ maskSrc|e('url') ~ "')",
+        "-webkit-mask-image:url('" ~ maskSrc ~ "')",
+        "mask-image:url('" ~ maskSrc ~ "')",
         "-webkit-mask-repeat:no-repeat", "mask-repeat:no-repeat",
         "-webkit-mask-position:" ~ bpos, "mask-position:" ~ bpos,
         "-webkit-mask-size:" ~ msize,   "mask-size:" ~ msize
