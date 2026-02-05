@@ -54,7 +54,7 @@
 
 {# Styles zusammenbauen #}
 {% set rules = [] %}
-{% if imgSrc %}{% set rules = rules|merge(["background-image:url('" ~ imgSrc|e('url') ~ "')"]) %}{% endif %}
+{% if imgSrc %}{% set rules = rules|merge(["background-image:url('" ~ imgSrc ~ "')"]) %}{% endif %}
 {% set rules = rules|merge([
     "background-position:" ~ bpos,
     "background-repeat:no-repeat",
@@ -63,8 +63,8 @@
 
 {% if maskSrc %}
     {% set rules = rules|merge([
-        "-webkit-mask-image:url('" ~ maskSrc|e('url') ~ "')",
-        "mask-image:url('" ~ maskSrc|e('url') ~ "')",
+        "-webkit-mask-image:url('" ~ maskSrc ~ "')",
+        "mask-image:url('" ~ maskSrc ~ "')",
         "-webkit-mask-repeat:no-repeat", "mask-repeat:no-repeat",
         "-webkit-mask-position:" ~ bpos, "mask-position:" ~ bpos,
         "-webkit-mask-size:" ~ msize,   "mask-size:" ~ msize
@@ -76,23 +76,11 @@
 {% set minHeight = minHeight|default(null) %}
 {% if minHeight %}{% set rules = rules|merge(["min-height:" ~ minHeight]) %}{% endif %}
 
-{# cssID aus Standardfeldern #}
-{# Sicher auf Array trimmen #}
-{% set _css = (cssID is defined and cssID is iterable) ? cssID : [] %}
-{# ID nur setzen, wenn es das erste Element gibt und nicht leer ist #}
-{% set idAttr = (_css[0] is defined and _css[0])
-    ? ' id="' ~ _css[0]|e('html_attr') ~ '"'
-    : '' %}
-
-{% set classList = ['ce_imagemask', customClasses|default('')] %}
-
 {% if cssID is defined and cssID is iterable and cssID[1] is defined and cssID[1] %}
     {% set classList = classList|merge([cssID[1]]) %}
 {% endif %}
 
-
-
-<div{{ idAttr|raw }} class="{{ classList|join(' ')|trim }}">
+<div id="{{ data.cssID|deserialize[0] }}" class="ce_imagemask {{ data.cssID|deserialize[1] }}">
     {% if headline and headline.text %}
         <{{ headline.tag|default('h2') }} class="ce_headline">{{ headline.text }}</{{ headline.tag|default('h2') }}>
     {% endif %}
